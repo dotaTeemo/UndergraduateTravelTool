@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+              android:layout_height="120dp"
+                android:clickable="false">
+
+    <LinearLayout
+        android:id="@+id/MNollLayout"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+        </RelativeLayout>
+
+     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="60dp"
+        android:layout_height="120dp"
+        android:src="@drawable/shijianzhou"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:id="@+id/textViewtitle"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:layout_alignParentTop="true"
+        android:layout_alignLeft="@+id/textViewtime"
+        android:layout_alignStart="@+id/textViewtime"/>
+
+    <TextView
+        android:id="@+id/textViewtime"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:maxLines="1"
+        android:layout_below="@+id/textViewtitle"
+        android:layout_alignLeft="@+id/textViewcontent"
+        android:layout_alignStart="@+id/textViewcontent"/>
+
+    <TextView
+        android:id="@+id/textViewcontent"
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:text="TextView"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/textViewtime"/>
+
+
+
+
+</RelativeLayout>

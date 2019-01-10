@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.wego.userActivity.userTravel.MapTest">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#e4e5e6"
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="8dp"
+        android:clipChildren="false">
+
+        <com.baidu.mapapi.map.MapView
+            android:id="@+id/bmapView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="true" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="#fff">
+
+            <TextView
+                android:id="@+id/locationname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="这里是地点的名字"
+                android:textSize="20sp"
+                android:textColor="#000000"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"/>
+            <TextView
+                android:id="@+id/locationabout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="这里是地点的相关介绍"
+                android:layout_below="@id/locationname"
+                android:textSize="15sp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="15dp"/>
+
+            <com.wego.userActivity.CircleImageView
+                android:id="@+id/maptestadd"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/fpj"
+
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="25dp"
+                android:layout_marginTop="-25dp"/>
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+</LinearLayout>

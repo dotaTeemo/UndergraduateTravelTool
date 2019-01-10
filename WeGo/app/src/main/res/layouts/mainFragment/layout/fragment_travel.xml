@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context="com.wego.mainFragment.TravelFragment">
+
+    <com.wego.userActivity.CircleImageView
+        android:id="@+id/circleImageView"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="190dp"
+        android:src="@drawable/logo"
+        app:border_color="@color/gray"
+        app:border_width="2dp"/>
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="70dp"
+        android:text="点击'WeGo'"
+        android:textSize="25sp"/>
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="110dp"
+        android:text="开始一段旅行"
+        android:textSize="25sp"/>
+
+    <RelativeLayout
+        android:id="@+id/Hint1"
+        android:layout_width="110dp"
+        android:layout_height="100dp"
+        android:background="@drawable/bubble10"
+        android:layout_marginTop="140dp"
+        android:layout_marginLeft="240dp">
+
+        <TextView
+            android:id="@+id/hintText1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="北京"
+            android:textSize="20sp"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="32dp"
+            android:textColor="#060606"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/Hint2"
+        android:layout_width="90dp"
+        android:layout_height="70dp"
+        android:background="@drawable/bubble7"
+        android:layout_marginTop="150dp"
+        android:layout_marginLeft="40dp">
+
+        <TextView
+            android:id="@+id/hintText2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="广东"
+            android:textSize="20sp"
+            android:layout_centerInParent="true"
+            android:textColor="#060606"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/Hint3"
+        android:layout_width="110dp"
+        android:layout_height="50dp"
+        android:background="@drawable/hint_left_bottom"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="250dp">
+
+        <TextView
+            android:id="@+id/hintText3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="上海"
+            android:textSize="20sp"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="30dp"
+            android:textColor="#060606"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/Hint4"
+        android:layout_width="100dp"
+        android:layout_height="80dp"
+        android:background="@drawable/bubble8"
+        android:layout_marginTop="310dp"
+        android:layout_marginLeft="80dp"
+        android:layout_alignParentRight="true">
+
+        <TextView
+            android:id="@+id/hintText4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="武汉"
+            android:textSize="20sp"
+            android:layout_centerInParent="true"
+            android:textColor="#060606"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/Hint5"
+        android:layout_width="110dp"
+        android:layout_height="150dp"
+        android:background="@drawable/bubble9"
+        android:layout_marginTop="285dp"
+        android:layout_marginRight="50dp"
+        android:layout_gravity="right">
+
+        <TextView
+            android:id="@+id/hintText5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="大理"
+            android:textSize="20sp"
+            android:layout_marginTop="55dp"
+            android:layout_marginLeft="30dp"
+            android:textColor="#060606"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/Hint6"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@drawable/bubble13"
+        android:layout_marginTop="230dp"
+        android:layout_marginRight="10dp"
+        android:layout_gravity="right">
+
+        <TextView
+            android:id="@+id/hintText6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="大连"
+            android:textSize="20sp"
+            android:layout_marginTop="37dp"
+            android:layout_marginLeft="45dp"
+            android:textColor="#060606"/>
+    </RelativeLayout>
+</FrameLayout>
