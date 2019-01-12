@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragement.UserFragment">
+
+    <AbsoluteLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_y="184dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/myxc"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/myxc"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginBottom="5dp"
+                    />
+                <Button
+                    android:id="@+id/utravel2"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:text="我的行程"
+                    android:textAlignment="textStart"
+                    android:textSize="20sp"
+                    android:typeface="monospace"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/scjd"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/scjd"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginBottom="5dp"
+                    />
+                <Button
+                    android:id="@+id/uCollect"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:text="收藏景点"
+                    android:textAlignment="textStart"
+                    android:textSize="20sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/scyj"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/scyj"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginBottom="5dp"
+                    />
+
+                <Button
+                    android:id="@+id/uSuggestion"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:text="收藏游记"
+                    android:textAlignment="viewStart"
+                    android:textSize="20sp"/>
+                >
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/wdyj"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/myyj"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginBottom="5dp"
+                    />
+
+                <Button
+                    android:id="@+id/uEstimate"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:text="我的游记"
+                    android:textAlignment="textStart"
+                    android:textSize="20sp"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/userBackgroud"
+            android:layout_width="match_parent"
+            android:layout_height="184dp"
+            android:layout_x="0dp"
+            android:layout_y="0dp"
+            android:src="@drawable/cover"/>
+
+        <ImageButton
+            android:id="@+id/uSetting"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="50dp"
+            android:layout_height="45dp"
+            android:layout_x="320dp"
+            android:layout_y="10dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/setting"/>
+    </AbsoluteLayout>
+
+    <Button
+        android:id="@+id/uRegister"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="50dp"
+        android:text="注册"
+        android:textAlignment="center"
+        android:textSize="20sp"/>
+
+    <Button
+        android:id="@+id/uLoginIn"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="100dp"
+        android:text="登录"
+        android:textAlignment="center"
+        android:textSize="20sp"/>
+
+</FrameLayout>
