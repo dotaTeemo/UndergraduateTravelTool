@@ -1,100 +1,119 @@
 package com.scrum.nju.undergraduatetravel.Fragement;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.scrum.nju.undergraduatetravel.Activity.LoginActivity;
+import com.scrum.nju.undergraduatetravel.Manager.UserManager;
 import com.scrum.nju.undergraduatetravel.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link UserFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link UserFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
+import static android.app.Activity.RESULT_OK;
+
 public class UserFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
-    private OnFragmentInteractionListener mListener;
+
+    @Bind(R.id.utravel2)
+    Button mUtravel2;
+    @Bind(R.id.uCollect)
+    Button mUCollect;
+    @Bind(R.id.uEstimate)
+    Button mUEstimate;
+    @Bind(R.id.uSuggestion)
+    Button mUSuggestion;
+    @Bind(R.id.userBackgroud)
+    ImageButton mUserBackgroud;
+    @Bind(R.id.uSetting)
+    ImageButton mUSetting;
+    @Bind(R.id.uRegister)
+    Button mURegister;
+    @Bind(R.id.head_image)
+    ImageView mHeadImage;
 
     public UserFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment UserFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static UserFragment newInstance(String param1, String param2) {
-        UserFragment fragment = new UserFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        //getSupportActionBar().hide();
+        View view = inflater.inflate(R.layout.fragment_user, container, false);
+        ButterKnife.bind(this, view);
+
+        return view;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+    }
+
+    private static final int login = 1;//登录
+    private static final int perInfo = 2;//个人信息
+    private static final int CHANGE_HEADIMG = 3;//头像修改了
+    private static final int setting = 4;//头像修改了
+
+
+    @OnClick({R.id.utravel2, R.id.uCollect, R.id.uEstimate, R.id.uSuggestion, R.id.userBackgroud, R.id.uSetting, R.id.uRegister, R.id.head_image})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.uRegister:
+                UserManager userManager = UserManager.getInstance();
+                Toast.makeText(getActivity().getApplicationContext(), "请先登录", Toast.LENGTH_SHORT).show();
+                startActivityForResult(new Intent(getActivity(), LoginActivity.class), login);
+                break;
+            case R.id.head_image:
+                Toast.makeText(getActivity().getApplicationContext(), "请先登录", Toast.LENGTH_SHORT).show();
+                startActivityForResult(new Intent(getActivity(), LoginActivity.class), login);
+                break;
         }
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_user, container, false);
-    }
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+        if (requestCode == login) {
+            if (resultCode == RESULT_OK) {
+//                updateHeadImg();
+                //initRadar();
+            } else {
+                mURegister.setText("登录");
+                mHeadImage.setImageResource(R.drawable.head);
+            }
         }
+
+        if (requestCode == perInfo) {
+            if(resultCode == CHANGE_HEADIMG) {
+//                updateHeadImg();
+            }
+        }
+
+        if(requestCode == setting) {
+            if(resultCode == RESULT_OK) {
+                mURegister.setText("登录");
+                mHeadImage.setImageResource(R.drawable.head);
+            }
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
 
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
+
 }

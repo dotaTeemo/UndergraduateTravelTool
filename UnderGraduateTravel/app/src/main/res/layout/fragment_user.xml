@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragement.UserFragment">
 
     <AbsoluteLayout
@@ -135,19 +136,9 @@
             android:src="@drawable/setting"/>
     </AbsoluteLayout>
 
-    <Button
-        android:id="@+id/uRegister"
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="50dp"
-        android:text="注册"
-        android:textAlignment="center"
-        android:textSize="20sp"/>
 
     <Button
-        android:id="@+id/uLoginIn"
+        android:id="@+id/uRegister"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -157,4 +148,12 @@
         android:textAlignment="center"
         android:textSize="20sp"/>
 
+    <ImageView
+        android:id="@+id/head_image"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/head"
+        />
 </FrameLayout>
