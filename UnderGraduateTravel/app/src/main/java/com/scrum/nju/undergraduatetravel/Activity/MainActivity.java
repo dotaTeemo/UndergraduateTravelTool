@@ -1,22 +1,17 @@
 package com.scrum.nju.undergraduatetravel.Activity;
 
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.media.Image;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 
+import com.scrum.nju.undergraduatetravel.Fragement.CapitalTeamFragment;
 import com.scrum.nju.undergraduatetravel.Fragement.FindFragment;
 import com.scrum.nju.undergraduatetravel.Fragement.SpotFragment;
-import com.scrum.nju.undergraduatetravel.Fragement.TeamFragment;
 import com.scrum.nju.undergraduatetravel.Fragement.TravelFragment;
 import com.scrum.nju.undergraduatetravel.Fragement.UserFragment;
 import com.scrum.nju.undergraduatetravel.R;
@@ -30,7 +25,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //下方的按钮组件
     private ImageView item_team, item_spot, item_travel, item_find, item_user;
     //Fragment
-    private TeamFragment teamFragment;
+    private CapitalTeamFragment capitalteamFragment;
     private SpotFragment spotFragment;
     private TravelFragment travelFragment;
     private FindFragment findFragment;
@@ -72,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mViewPager = (ViewPager) findViewById(R.id.mainViewPager);
 
         //初始化Fragment
-        teamFragment = new TeamFragment();
+        capitalteamFragment = new CapitalTeamFragment();
         spotFragment = new SpotFragment();
         userFragment = new UserFragment();
         travelFragment = new TravelFragment();
@@ -80,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
         //设置FragmentList
-        mFragmentList.add(teamFragment);
+        mFragmentList.add(capitalteamFragment);
         mFragmentList.add(spotFragment);
         mFragmentList.add(travelFragment);
         mFragmentList.add(findFragment);
