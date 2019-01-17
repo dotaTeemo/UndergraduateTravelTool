@@ -74,10 +74,16 @@ public class UserFragment extends Fragment {
         switch (view.getId()) {
             case R.id.uRegister:
                 UserManager userManager = UserManager.getInstance();
-                Toast.makeText(getActivity().getApplicationContext(), "请先登录", Toast.LENGTH_SHORT).show();
-                startActivityForResult(new Intent(getActivity(), LoginActivity.class), login);
+                if(userManager.isLogined()){
+
+                }
+                else {
+                    Toast.makeText(getActivity().getApplicationContext(), "请先登录", Toast.LENGTH_SHORT).show();
+                    startActivityForResult(new Intent(getActivity(), LoginActivity.class), login);
+                }
                 break;
             case R.id.head_image:
+                userManager = UserManager.getInstance();
                 Toast.makeText(getActivity().getApplicationContext(), "请先登录", Toast.LENGTH_SHORT).show();
                 startActivityForResult(new Intent(getActivity(), LoginActivity.class), login);
                 break;
