@@ -8,4 +8,5 @@
     <color name="dialogbk_white">#eeffffff</color>
     <color name="toolbargray">#f7f7f7</color>
     <color name="lightgreen">#89b374</color>
+    <color name="character_bg">#CCC</color>
 </resources>
