@@ -1,8 +1,6 @@
 package com.scrum.nju.undergraduatetravel.Fragement;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -14,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.scrum.nju.undergraduatetravel.Activity.LoginActivity;
-import com.scrum.nju.undergraduatetravel.Manager.UserManager;
+import com.scrum.nju.undergraduatetravel.Manager.userManager;
 import com.scrum.nju.undergraduatetravel.R;
 
 import butterknife.Bind;
@@ -54,9 +52,18 @@ public class UserFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_user, container, false);
         ButterKnife.bind(this, view);
 
+
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        userManager user = userManager.getInstance();
+        if (user.isLogined()) {
+            mURegister.setText(user.getAccountId());
+        }
+    }
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -73,9 +80,9 @@ public class UserFragment extends Fragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.uRegister:
-                UserManager userManager = UserManager.getInstance();
+                userManager userManager = com.scrum.nju.undergraduatetravel.Manager.userManager.getInstance();
                 if(userManager.isLogined()){
-
+                    //登陆成功后
                 }
                 else {
                     Toast.makeText(getActivity().getApplicationContext(), "请先登录", Toast.LENGTH_SHORT).show();
@@ -83,7 +90,7 @@ public class UserFragment extends Fragment {
                 }
                 break;
             case R.id.head_image:
-                userManager = UserManager.getInstance();
+                userManager = com.scrum.nju.undergraduatetravel.Manager.userManager.getInstance();
                 Toast.makeText(getActivity().getApplicationContext(), "请先登录", Toast.LENGTH_SHORT).show();
                 startActivityForResult(new Intent(getActivity(), LoginActivity.class), login);
                 break;

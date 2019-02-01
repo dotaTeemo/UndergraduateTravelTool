@@ -1,13 +1,13 @@
 package com.scrum.nju.undergraduatetravel.Manager;
 
-public class UserManager {
-    private UserManager() {}
-    private static UserManager instance;
+public class userManager {
+    private userManager() {}
+    private static userManager instance = null;
     private String accountId;
 
-    public static  UserManager getInstance() {
+    public static userManager getInstance() {
         if(instance == null) {
-            instance = new UserManager();
+            instance = new userManager();
         }
         return  instance;
     }
