@@ -78,9 +78,9 @@ public class UserFragment extends Fragment {
 
     @OnClick({R.id.utravel2, R.id.uCollect, R.id.uEstimate, R.id.uSuggestion, R.id.userBackgroud, R.id.uSetting, R.id.uRegister, R.id.head_image})
     public void onViewClicked(View view) {
+        userManager userManager = com.scrum.nju.undergraduatetravel.Manager.userManager.getInstance();
         switch (view.getId()) {
             case R.id.uRegister:
-                userManager userManager = com.scrum.nju.undergraduatetravel.Manager.userManager.getInstance();
                 if(userManager.isLogined()){
                     //登陆成功后
                 }
@@ -90,9 +90,14 @@ public class UserFragment extends Fragment {
                 }
                 break;
             case R.id.head_image:
-                userManager = com.scrum.nju.undergraduatetravel.Manager.userManager.getInstance();
-                Toast.makeText(getActivity().getApplicationContext(), "请先登录", Toast.LENGTH_SHORT).show();
-                startActivityForResult(new Intent(getActivity(), LoginActivity.class), login);
+                if(userManager.isLogined()){
+                    //登陆成功后
+                }
+                else {
+                    userManager = com.scrum.nju.undergraduatetravel.Manager.userManager.getInstance();
+                    Toast.makeText(getActivity().getApplicationContext(), "请先登录", Toast.LENGTH_SHORT).show();
+                    startActivityForResult(new Intent(getActivity(), LoginActivity.class), login);
+                }
                 break;
         }
     }

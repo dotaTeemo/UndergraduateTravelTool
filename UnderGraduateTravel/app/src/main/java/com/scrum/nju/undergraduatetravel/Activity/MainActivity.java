@@ -19,6 +19,9 @@ import com.scrum.nju.undergraduatetravel.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.bmob.v3.Bmob;
+import cn.bmob.v3.BmobUser;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     //开始实现页面切换
     private ViewPager mViewPager;
@@ -39,6 +42,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // 初始化Bmob
+        Bmob.initialize(this, "770c0a678f73d320aa24420d9a2cdacc");
+        BmobUser.getCurrentUser();
         //去除工具栏
         getSupportActionBar().hide();
         initViews();
