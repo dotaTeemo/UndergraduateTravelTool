@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.scrum.nju.undergraduatetravel.Activity.LoginActivity;
+import com.scrum.nju.undergraduatetravel.Activity.MyTravelActivity;
 import com.scrum.nju.undergraduatetravel.Manager.userManager;
 import com.scrum.nju.undergraduatetravel.R;
 
@@ -80,6 +81,14 @@ public class UserFragment extends Fragment {
     public void onViewClicked(View view) {
         userManager userManager = com.scrum.nju.undergraduatetravel.Manager.userManager.getInstance();
         switch (view.getId()) {
+            case R.id.utravel2:
+                if (userManager.isLogined()) {
+                    startActivity(new Intent(getActivity(), MyTravelActivity.class));
+                } else if (!userManager.isLogined()) {
+                    Toast.makeText(getActivity().getApplicationContext(), "请先登录", Toast.LENGTH_SHORT).show();
+                    startActivityForResult(new Intent(getActivity(), LoginActivity.class), login);
+                }
+                break;
             case R.id.uRegister:
                 if(userManager.isLogined()){
                     //登陆成功后

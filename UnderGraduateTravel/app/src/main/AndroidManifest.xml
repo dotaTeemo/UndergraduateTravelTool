@@ -32,7 +32,8 @@
         <activity android:name=".Activity.RegisterActivity" />
         <activity android:name=".Activity.LoginActivity" />
         <activity android:name=".Activity.ForgetActivity" />
-        <activity android:name=".Activity.IntroduceActivity"></activity>
+        <activity android:name=".Activity.IntroduceActivity" />
+        <activity android:name=".Activity.MyTravelActivity"></activity>
     </application>
 
 </manifest>

@@ -84,7 +84,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="start"
-                    android:text="收藏游记"
+                    android:text="我的团队"
                     android:textAlignment="viewStart"
                     android:textSize="20sp"/>
                 >
@@ -110,7 +110,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="start"
-                    android:text="我的游记"
+                    android:text="加入团队"
                     android:textAlignment="textStart"
                     android:textSize="20sp"/>
             </LinearLayout>
