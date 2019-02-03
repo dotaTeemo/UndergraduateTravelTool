@@ -1,14 +1,32 @@
 package com.scrum.nju.undergraduatetravel.Fragement;
 
-import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ListView;
+import android.widget.SearchView;
+import android.widget.Toast;
 
+import com.scrum.nju.undergraduatetravel.Activity.ForgetActivity;
+import com.scrum.nju.undergraduatetravel.Activity.LoginActivity;
+import com.scrum.nju.undergraduatetravel.Activity.RegisterActivity;
+import com.scrum.nju.undergraduatetravel.Adapter.CapitalAdapter;
+import com.scrum.nju.undergraduatetravel.MiddleClass.HostIp;
 import com.scrum.nju.undergraduatetravel.R;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,6 +47,15 @@ public class CapitalTeamFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    @Bind(R.id.search)
+    SearchView SearchviewC;
+
+    @Bind(R.id.recycleviewcapital)
+    RecyclerView recyclerViewcapital;
+
+    @Bind(R.id.searchitem)
+    RecyclerView searchitem;
 
     public CapitalTeamFragment() {
         // Required empty public constructor
@@ -65,10 +92,71 @@ public class CapitalTeamFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_capital_team, container, false);
-    }
 
-    // TODO: Rename method, update argument and hook method into UI event
+        View view =inflater.inflate(R.layout.fragment_capital_team, container, false);
+        ButterKnife.bind(this,view);
+        List<String> list2 = new ArrayList<>();
+        CapitalAdapter itemAdapter2=new CapitalAdapter(list2, getActivity());//添加适配器，这里适配器刚刚装入了数据
+//        final String url = HostIp.ip + "/getAllTeam";
+
+        for (int i = 3; i < 15; i++) {
+            list2.add("" + i);
+        }
+        List<String> list = new ArrayList<>();
+        CapitalAdapter itemAdapter=new CapitalAdapter(list, getActivity());//添加适配器，这里适配器刚刚装入了数据
+        searchitem.setLayoutManager(new LinearLayoutManager(getActivity()));
+        searchitem.setAdapter(itemAdapter2);
+
+        recyclerViewcapital.setAdapter(itemAdapter);
+
+        recyclerViewcapital.setLayoutManager(new LinearLayoutManager(getActivity()));//设置布局管理器，这里选择用竖直的列表
+
+
+        for (int i = 5; i < 15; i++) {
+            list.add("" + i);
+        }
+
+
+
+        SearchviewC.setOnSearchClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                recyclerViewcapital.setVisibility(View.INVISIBLE);
+                searchitem.setVisibility(View.VISIBLE);
+            }
+        });
+        SearchviewC.setOnCloseListener(new SearchView.OnCloseListener(){
+
+            @Override
+            public boolean onClose() {
+                recyclerViewcapital.setVisibility(View.VISIBLE);
+                searchitem.setVisibility(View.GONE);
+                return false;
+            }
+        });
+        SearchviewC.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            // 当点击搜索按钮时触发该方法
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+//                recyclerViewcapital.setVisibility(View.GONE);
+                searchitem.setVisibility(View.VISIBLE);
+                return false;
+            }
+
+            // 当搜索内容改变时触发该方法
+            @Override
+            public boolean onQueryTextChange(String newText) {
+//                recyclerViewcapital.setVisibility(View.GONE);
+                searchitem.setVisibility(View.VISIBLE);
+                //do something
+                //当没有输入任何内容的时候清除结果，看实际需求
+
+                return false;
+            }
+        });
+        return view;
+    }
+       // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -95,4 +183,6 @@ public class CapitalTeamFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+
 }

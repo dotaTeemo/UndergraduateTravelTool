@@ -11,7 +11,7 @@
         android:background="@mipmap/ic_launcher"/>
 
     <TextView
-        android:id="@+id/contact_name"
+        android:id="@+id/requestuser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
@@ -21,7 +21,13 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/btn_cancel"
-        android:text="删除"
+        android:id="@+id/btn_accept"
+        android:text="接受"
+        />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_refuse"
+        android:text="拒绝"
         />
 </LinearLayout>

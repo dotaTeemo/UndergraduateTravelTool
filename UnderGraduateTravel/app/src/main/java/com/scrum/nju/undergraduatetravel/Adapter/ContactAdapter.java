@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.scrum.nju.undergraduatetravel.MiddleClass.Contact;
@@ -19,7 +20,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public class ContactAdapter extends RecyclerView.Adapter <RecyclerView.ViewHolder>{
+public class ContactAdapter extends RecyclerView.Adapter <RecyclerView.ViewHolder> implements View.OnClickListener{
     private LayoutInflater mLayoutInflater;
     private Context mContext;
     private String[] mContactNames; // 联系人名称字符串数组
@@ -32,12 +33,18 @@ public class ContactAdapter extends RecyclerView.Adapter <RecyclerView.ViewHolde
         ITEM_TYPE_CONTACT
     }
 
-    public ContactAdapter(Context context, String[] contactNames) {
+    public ContactAdapter(Context context, ArrayList contactNames) {
         mContext = context;
         mLayoutInflater = LayoutInflater.from(context);
-        mContactNames = contactNames;
+        if(contactNames!=null){
+        int size=contactNames.size();
+        String[] array=new String[size];
+        for(int i=0;i<contactNames.size();i++){
+            array[i]=(String)contactNames.get(i); }
+        mContactNames =array;
 
         handleContact();
+        }
     }
 
     private void handleContact() {
@@ -88,8 +95,10 @@ public class ContactAdapter extends RecyclerView.Adapter <RecyclerView.ViewHolde
             ((CharacterHolder) holder).mTextView.setText(resultList.get(position).getmName());
         } else if (holder instanceof ContactHolder) {
             ((ContactHolder) holder).mTextView.setText(resultList.get(position).getmName());
+            ((ContactHolder) holder).btnCancel.setTag(position);
         }
     }
+
 
     @Override
     public int getItemViewType(int position) {
@@ -113,11 +122,13 @@ public class ContactAdapter extends RecyclerView.Adapter <RecyclerView.ViewHolde
 
     public class ContactHolder extends RecyclerView.ViewHolder {
         TextView mTextView;
+        private Button btnCancel;
 
         ContactHolder(View view) {
             super(view);
-
+            btnCancel= (Button) view.findViewById(R.id.btn_cancel);
             mTextView = (TextView) view.findViewById(R.id.contact_name);
+            btnCancel.setOnClickListener(ContactAdapter.this);
         }
     }
 
@@ -131,5 +142,39 @@ public class ContactAdapter extends RecyclerView.Adapter <RecyclerView.ViewHolde
         }
 
         return -1; // -1不会滑动
+    }
+
+    public enum ViewName {
+        ITEM,
+        PRACTISE
+    }
+
+    //自定义一个回调接口来实现Click和LongClick事件
+    public interface OnItemClickListener  {
+        void onItemClick(View v, ViewName viewName, int position,String account);
+        void onItemLongClick(View v);
+    }
+
+    private OnItemClickListener mOnItemClickListener;//声明自定义的接口
+
+    //定义方法并传给外面的使用者
+    public void setOnItemClickListener(OnItemClickListener  listener) {
+        this.mOnItemClickListener  = listener;
+    }
+
+    @Override
+    public void onClick(View v) {
+        int position = (int) v.getTag();      //getTag()获取数据
+        String account=mContactNames[position];
+        if (mOnItemClickListener != null) {
+            switch (v.getId()){
+                case R.id.contact_list:
+                    mOnItemClickListener.onItemClick(v, ViewName.PRACTISE, position,account);
+                    break;
+                default:
+                    mOnItemClickListener.onItemClick(v, ViewName.ITEM, position,account);
+                    break;
+            }
+        }
     }
 }

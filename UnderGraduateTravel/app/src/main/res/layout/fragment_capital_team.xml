@@ -1,14 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".Fragement.CapitalTeamFragment">
-
+<RelativeLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/capitalfragment">
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <SearchView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/search"
+
+        android:queryHint="请输入搜索内容"></SearchView>
+
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:id="@+id/content_capital"
+        android:layout_below="@+id/search">
 
-</FrameLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/searchitem"
+            ></android.support.v7.widget.RecyclerView>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycleviewcapital"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            ></android.support.v7.widget.RecyclerView>
+    </FrameLayout>
+
+
+</RelativeLayout>
+
+
