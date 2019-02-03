@@ -71,7 +71,14 @@ public class IntroduceActivity extends AppCompatActivity {
 
                         @Override
                         public void onClick(View v) {
-                            Toast.makeText(IntroduceActivity.this, "添加成功", Toast.LENGTH_LONG).show();
+                            if(!userManager.getInstance().isLogined()) {
+                                Toast.makeText(IntroduceActivity.this, "请先登录", Toast.LENGTH_LONG).show();
+                                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                            }
+                            else {
+                                Toast.makeText(IntroduceActivity.this, "添加成功", Toast.LENGTH_LONG).show();
+                                // 存spot信息进数据库
+                            }
                         }
                     });
                     pDialog.setLoveBtnClickListener(new View.OnClickListener() {
@@ -80,6 +87,7 @@ public class IntroduceActivity extends AppCompatActivity {
                         public void onClick(View v) {
                             if(!userManager.getInstance().isLogined()) {
                                 Toast.makeText(IntroduceActivity.this, "请先登录", Toast.LENGTH_LONG).show();
+                                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                             } else {
                                 // 存spot信息进数据库
                             }
