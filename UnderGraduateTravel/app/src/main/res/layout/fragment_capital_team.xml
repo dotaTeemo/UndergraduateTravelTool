@@ -4,32 +4,74 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/capitalfragment">
     <!-- TODO: Update blank fragment layout -->
-    <SearchView
-        android:layout_width="match_parent"
+    <Button
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/search"
+        android:text="新建团队"
+        android:id="@+id/newcapital"/>
 
-        android:queryHint="请输入搜索内容"></SearchView>
 
     <FrameLayout
+        android:id="@+id/content_capital"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/content_capital"
-        android:layout_below="@+id/search">
+        android:layout_marginTop="0dp"
+        android:layout_below="@+id/newcapital">
 
 
-        <android.support.v7.widget.RecyclerView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/searchitem"
-            ></android.support.v7.widget.RecyclerView>
+            android:orientation="vertical"
+            >
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_selector"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tv_bottom_line"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+            <LinearLayout
+                android:id="@+id/ll_bottom_btn"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+
+                android:orientation="horizontal">
+                <Button
+                    android:id="@+id/btn_cancel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="#feaa25"
+                    android:text="取消"
+                    android:textColor="#000" />
+
+                <Button
+                    android:id="@+id/btn_ok"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="#feaa25"
+                    android:text="确定"
+                    android:textColor="#000" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!--<android.support.v7.widget.RecyclerView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/searchitem"-->
+        <!--&gt;</android.support.v7.widget.RecyclerView>-->
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycleviewcapital"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            ></android.support.v7.widget.RecyclerView>
+            android:visibility="gone"></android.support.v7.widget.RecyclerView>
     </FrameLayout>
-
 
 </RelativeLayout>
 

@@ -24,10 +24,10 @@ import com.scrum.nju.undergraduatetravel.Activity.RegisterActivity;
 import com.scrum.nju.undergraduatetravel.Adapter.ContactAdapter;
 import com.scrum.nju.undergraduatetravel.Adapter.FriendsAddAdapter;
 import com.scrum.nju.undergraduatetravel.Manager.userManager;
-import com.scrum.nju.undergraduatetravel.MiddleClass.Contact;
 import com.scrum.nju.undergraduatetravel.MiddleClass.HostIp;
 import com.scrum.nju.undergraduatetravel.MiddleClass.LetterView;
 import com.scrum.nju.undergraduatetravel.MiddleClass.MyOkHttp;
+import com.scrum.nju.undergraduatetravel.MiddleClass.User;
 import com.scrum.nju.undergraduatetravel.R;
 import com.scrum.nju.undergraduatetravel.MiddleClass.DividerItemDecoration;
 
@@ -54,13 +54,21 @@ public class FindFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     private static final int UPDATE = 0;
     private static final int SENDAPPLY =1;//登录验证
+    private static final int ADDFRIEND=2;
+    private static final int GETFRIEND=3;
+    private static final int DELFRIEND=4;
+    private static final int GETApplyFRIEND=5;
 
     private RecyclerView contactList;
+    private RecyclerView AddfriendList;
 //    private String[] contactNames;
-    ArrayList contactNames=new ArrayList();
+
+    ArrayList <User>contactNames=new <User>ArrayList();
+    ArrayList <User> contactApplyNames=new <User> ArrayList();
+
     private LinearLayoutManager layoutManager;
-    private LinearLayoutManager layoutManagerforadd;
-    private LetterView letterView;
+    private  EditText sendaccount;
+    private FriendsAddAdapter addFriendadapter;
     private ContactAdapter adapter;
 
     // TODO: Rename and change types of parameters
@@ -72,19 +80,41 @@ public class FindFragment extends Fragment {
         @Override
         public void handleMessage(Message msg) {
             if (msg.what == UPDATE) {
-            if(msg.obj.toString() == "true"){
-                Toast.makeText(getActivity(), "发送成功", Toast.LENGTH_SHORT).show();
-                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(getActivity().INPUT_METHOD_SERVICE);
-                // 隐藏软键盘
-                imm.hideSoftInputFromWindow(getActivity().getWindow().getDecorView().getWindowToken(), 0);
+                if(msg.obj.toString() == "true"){
+                    Toast.makeText(getActivity(), "发送成功", Toast.LENGTH_SHORT).show();
+                    sendaccount.setText("");
+                    InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(getActivity().INPUT_METHOD_SERVICE);
+
+                    // 隐藏软键盘
+                    imm.hideSoftInputFromWindow(getActivity().getWindow().getDecorView().getWindowToken(), 0);
 //                getActivity().finish();
-            }
-            else{
-                Toast.makeText(getActivity(), "请不要重复发送", Toast.LENGTH_SHORT).show();
-            }}
-        else{
-                    Toast.makeText(getActivity(), "发送失败，检查网络连接", Toast.LENGTH_SHORT).show();
                 }
+                else{
+                    Toast.makeText(getActivity(), "请不要重复发送", Toast.LENGTH_SHORT).show();
+                }
+            }else if(msg.what == ADDFRIEND){
+                int position=Integer.parseInt(msg.obj.toString());
+                contactApplyNames.remove(position);
+                addFriendadapter.notifyItemRemoved(position);
+                addFriendadapter.notifyItemRangeChanged(position,contactApplyNames.size()-position);
+            }else if(msg.what == DELFRIEND){
+                int position=Integer.parseInt(msg.obj.toString());
+                contactNames.remove(position);
+                adapter.notifyItemRemoved(position);
+                adapter.notifyItemRangeChanged(position,contactNames.size()-position);
+            }
+            //加载朋友列表
+            else if(msg.what == GETFRIEND){
+                adapter = new ContactAdapter(contactNames,getActivity());
+                contactList.setAdapter(adapter);
+                adapter.setOnItemClickListener(MyItemClickListener);
+            }else if(msg.what == GETApplyFRIEND){
+                addFriendadapter = new FriendsAddAdapter(contactApplyNames,getActivity());
+                AddfriendList.setAdapter(addFriendadapter);
+                addFriendadapter.setOnItemClickListener(Myaddfriendsitemclick);
+            }else{
+                    Toast.makeText(getActivity(), "发送失败，检查网络连接", Toast.LENGTH_SHORT).show();
+            }
             super.handleMessage(msg);
 
         }
@@ -120,7 +150,6 @@ public class FindFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
     }
 
     @Override
@@ -129,98 +158,20 @@ public class FindFragment extends Fragment {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_find, container, false);
 //        handler=new Handler();
-         userManager userManager = com.scrum.nju.undergraduatetravel.Manager.userManager.getInstance();
-        final String url2 = HostIp.ip + "/getFriend?account="+userManager.getAccountId();
-//        contactNames.add("安然");
-//        contactNames.add("奥兹");
+
         contactList = (RecyclerView) view.findViewById(R.id.contact_list);
-        letterView = (LetterView) view.findViewById(R.id.letter_view);
+//        letterView = (LetterView) view.findViewById(R.id.letter_view);
+        AddfriendList = view.findViewById(R.id.recforAddFriends);
+
         layoutManager = new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false);
 
         contactList.setLayoutManager(layoutManager);
         contactList.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
+        AddfriendList.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    String result = MyOkHttp.get(url2);
-                    Log.e("注册信息",result);
-                    JSONObject jsonObject2 = new JSONObject(result);
-                    JSONArray jsonArray = jsonObject2.getJSONArray("response");
-                    Message msg = new Message();
-                    for (int i=0; i < jsonArray.length(); i++)    {
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        contactNames.add(jsonObject.getString("friend"));
-                    }
-                    adapter = new ContactAdapter(getActivity(), contactNames);
-                    contactList.setAdapter(adapter);
-                    adapter.setOnItemClickListener(MyItemClickListener);
-//                    msg.what = UPDATE;
-//                    msg.obj = contactNames;
-//                    handler.sendMessage(msg);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
+        getnewmsg();
+        getnewApply();
 
-//           contactNames = new String[] {"安然","奥兹","德玛","张三丰", "郭靖", "黄蓉", "黄老邪", "赵敏", "123", "天山童姥", "任我行", "于万亭", "陈家洛", "韦小宝", "$6", "穆人清", "陈圆圆", "郭芙", "郭襄", "穆念慈", "东方不败", "梅超风", "林平之", "林远图", "灭绝师太", "段誉", "鸠摩智"};
-//
-
-
-        letterView.setCharacterListener(new LetterView.CharacterClickListener() {
-            @Override
-            public void clickCharacter(String character) {
-                layoutManager.scrollToPositionWithOffset(adapter.getScrollPosition(character),0);
-            }
-
-            @Override
-            public void clickArrow() {
-                layoutManager.scrollToPositionWithOffset(0,0);
-            }
-        });
-        //好友请求加载
-//        final String url3 = HostIp.ip + "/getFriend?account=12345678912";
-//        RecyclerView recforAddFriends = (RecyclerView) view.findViewById(R.id.recforAddFriends);
-//        letterView = (LetterView) view.findViewById(R.id.letter_view);
-        //layoutManagerforadd = new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false);
-
-//        recforAddFriends.setLayoutManager(new LinearLayoutManager(getActivity()));
-        //recforAddFriends.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
-//
-//        List<userManager> list;
-//        list.add(new userManager("111111"));
-//        list.add("111111");
-//        adapter = new FriendsAddAdapter(getActivity(), contactNames);
-//        contactList.setAdapter(adapter);
-//        adapter.setOnItemClickListener(MyItemClickListener);
-
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                try {
-//                    String result = MyOkHttp.get(url2);
-//                    Log.e("注册信息",result);
-//                    JSONObject jsonObject2 = new JSONObject(result);
-//
-//                    JSONArray jsonArray = jsonObject2.getJSONArray("response");
-//                    Message msg = new Message();
-//                    for (int i=0; i < jsonArray.length(); i++)    {
-//                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-//                        contactNames.add(jsonObject.getString("friend"));
-//                    }
-//                    adapter = new ContactAdapter(getActivity(), contactNames);
-//                    contactList.setAdapter(adapter);
-//                    adapter.setOnItemClickListener(MyItemClickListener);
-////                    msg.what = UPDATE;
-////                    msg.obj = contactNames;
-////                    handler.sendMessage(msg);
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }).start();
       return view;
     }
 
@@ -252,15 +203,16 @@ public class FindFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
-    private ContactAdapter.OnItemClickListener MyItemClickListener = new ContactAdapter.OnItemClickListener() {
 
+    private ContactAdapter.OnItemClickListener MyItemClickListener = new ContactAdapter.OnItemClickListener() {
         @Override
-        public void onItemClick(View v, ContactAdapter.ViewName viewName, int position,String account) {
+        public void onItemClick(View v, ContactAdapter.ViewName viewName,final int position) {
+
             //viewName可区分item及item内部控件
             switch (v.getId()){
                 case R.id.btn_cancel:
-                    adapter.notifyItemRemoved(position);
-                    final String url3 = HostIp.ip + "/deleteFriend?account=12345678912&friend="+account;
+                    userManager userManager = com.scrum.nju.undergraduatetravel.Manager.userManager.getInstance();
+                    final String url3 = HostIp.ip + "/deleteFriend?account="+userManager.getAccountId()+"&friend="+contactNames.get(position).getAccountId();
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
@@ -270,60 +222,96 @@ public class FindFragment extends Fragment {
                                 JSONObject jsonObject2 = new JSONObject(result);
                                 String response = jsonObject2.getString("response");
                                 if (response=="true"){
-                                    adapter.notifyDataSetChanged();
+                                    Message mes = new Message();
+                                    mes.what=DELFRIEND;
+                                    mes.obj=position;
+                                    handler2.sendMessage(mes);
                                 }
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
                         }
                     }).start();
-                    Toast.makeText(getActivity(),"你点击了同意按钮"+(position),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(),"你点击了删除按钮"+position,Toast.LENGTH_SHORT).show();
                     break;
                 default:
-                    Toast.makeText(getActivity(),"你点击了item按钮"+(position+1),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(),"你点击了item按钮"+position,Toast.LENGTH_SHORT).show();
                     break;
             }
         }
-
-        @Override
-        public void onItemLongClick(View v) {
-
-        }
     };
 
+    //添加朋友点击
+    private FriendsAddAdapter.OnItemClickListener Myaddfriendsitemclick=new FriendsAddAdapter.OnItemClickListener() {
+        @Override
+        public void onItemClick(View v, FriendsAddAdapter.ViewName viewName,final int position) {
+            switch (v.getId()) {
+                case R.id.btn_accept:
+                    userManager userManager = com.scrum.nju.undergraduatetravel.Manager.userManager.getInstance();
+                    final String url4 = HostIp.ip + "/permitFriend?account="+userManager.getAccountId()+"&friend="+contactApplyNames.get(position).getAccountId();
+
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                String result = MyOkHttp.get(url4);
+                                JSONObject jsonObject2 = new JSONObject(result);
+                                String response = jsonObject2.getString("response");
+                                if (response=="true"){
+                                    Message msg = new Message();
+                                    msg.what = ADDFRIEND;
+                                    msg.obj = position;
+                                    handler2.sendMessage(msg);
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }).start();
+                    break;
+                case R.id.btn_refuse:
+                    contactApplyNames.remove(position);
+                    addFriendadapter.notifyItemRemoved(position);
+                    addFriendadapter.notifyItemRangeChanged(position,contactApplyNames.size());
+                    break;
+            }
+            }
+    };
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
+    //好友请求查看的监听
         Button appled = (Button) getActivity().findViewById(R.id.appled);
         appled.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "nihao", Toast.LENGTH_LONG).show();
+                getnewApply();
+
                 LinearLayout sendaccount = (LinearLayout) getActivity().findViewById(R.id.myfriends);
                 LinearLayout RequestAddFriends=getActivity().findViewById(R.id.RequestAddFriends);
                 sendaccount.setVisibility(View.GONE);
                 RequestAddFriends.setVisibility(View.VISIBLE);
+
             }
         });
 
+        //发送好友请求
         Button sendapply = (Button) getActivity().findViewById(R.id.sendapply);
         sendapply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText sendaccount = (EditText) getActivity().findViewById(R.id.sendaccount);
+                sendaccount= (EditText) getActivity().findViewById(R.id.sendaccount);
                 String str2=sendaccount.getText().toString();
 
                 if (!TextUtils.isEmpty(str2)) {
                     userManager userManager = com.scrum.nju.undergraduatetravel.Manager.userManager.getInstance();
-                    final String url3 = HostIp.ip + "/addFriendApply?account="+userManager.getAccountId()+"&friend="+str2;
+                    final String url3 = HostIp.ip + "/addFriendApply?account="+str2+"&friend="+userManager.getAccountId();
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
                             try {
                                 String result = MyOkHttp.get(url3);
-                                Log.e("注册信息",result);
                                 JSONObject jsonObject2 = new JSONObject(result);
                                 Message msg = new Message();
                                 msg.what = UPDATE;
@@ -344,11 +332,94 @@ public class FindFragment extends Fragment {
         backTo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                getnewmsg();
                 LinearLayout sendaccount = (LinearLayout) getActivity().findViewById(R.id.myfriends);
                 LinearLayout RequestAddFriends=getActivity().findViewById(R.id.RequestAddFriends);
                 sendaccount.setVisibility(View.VISIBLE);
                 RequestAddFriends.setVisibility(View.GONE);
+                adapter.notifyDataSetChanged();
             }
         });
     }
+
+
+    //加载好友列表
+    private void  getnewmsg(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    userManager userManager = com.scrum.nju.undergraduatetravel.Manager.userManager.getInstance();
+                    Boolean isempty=true;
+                    while(isempty){
+                        try {
+                            if (TextUtils.isEmpty(userManager.getAccountId())) {
+                                Thread.sleep(10);
+                            }else {
+                                isempty=false;
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }}
+                        //网络请求
+                    String url6 = HostIp.ip + "/getFriend?account="+userManager.getAccountId();
+                    String result = MyOkHttp.get(url6);
+                    Log.e("注册信息",result);
+                    JSONObject jsonObject2 = new JSONObject(result);
+                    JSONArray jsonArray = jsonObject2.getJSONArray("response");
+                    contactNames.clear();
+                    for (int i=0; i < jsonArray.length(); i++){
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        contactNames.add(new User(jsonObject.getString("friend")));
+                    }
+                    Log.e("messa",contactNames.toString());
+                    Message mes=new Message();
+                    mes.what=GETFRIEND;
+                    handler2.sendMessage(mes);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
+    //加载好友申请列表
+    private void getnewApply(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    userManager userManager = com.scrum.nju.undergraduatetravel.Manager.userManager.getInstance();
+                    Boolean isempty=true;
+                    while(isempty){
+                        try {
+                            if (TextUtils.isEmpty(userManager.getAccountId())) {
+                                Thread.sleep(10);
+                            }else {
+                                isempty=false;
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }}
+                    String url6 = HostIp.ip + "/getFriendApplies?account="+userManager.getAccountId();
+                    String result = MyOkHttp.get(url6);
+                    Log.e("请求信息",result);
+                    JSONObject jsonObject2 = new JSONObject(result);
+                    JSONArray jsonArray = jsonObject2.getJSONArray("response");
+                    contactApplyNames.clear();
+                    for (int i=0; i < jsonArray.length(); i++){
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        contactApplyNames.add(new User(jsonObject.getString("friend")));
+                    }
+                    Log.e("messa",contactApplyNames.toString());
+                    Message mes=new Message();
+                    mes.what=GETApplyFRIEND;
+                    handler2.sendMessage(mes);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
 }

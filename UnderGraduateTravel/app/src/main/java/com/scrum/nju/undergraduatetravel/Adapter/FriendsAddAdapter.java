@@ -10,16 +10,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.scrum.nju.undergraduatetravel.Manager.userManager;
+import com.scrum.nju.undergraduatetravel.MiddleClass.User;
 import com.scrum.nju.undergraduatetravel.R;
 
 import java.util.List;
 
 public class FriendsAddAdapter extends RecyclerView.Adapter<FriendsAddAdapter.MyViewHolder> implements View.OnClickListener {
-    private List<userManager> list;//数据源
+    private List<User> list;//数据源
     private Context context;//上下文
 
-    public FriendsAddAdapter(List<userManager> list, Context context) {
+    public FriendsAddAdapter(List<User> list, Context context) {
         this.list = list;
         this.context = context;
     }
@@ -34,11 +34,13 @@ public class FriendsAddAdapter extends RecyclerView.Adapter<FriendsAddAdapter.My
     //绑定
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        userManager data = list.get(position);
+        User data = list.get(position);
 
         holder.tvMessage.setText(data.getAccountId());
 
         holder.itemView.setTag(position);
+        holder.btnAgree.setTag(position);
+        holder.btnRefuse.setTag(position);
     }
 
     //有多少个item？
@@ -78,7 +80,7 @@ public class FriendsAddAdapter extends RecyclerView.Adapter<FriendsAddAdapter.My
     //自定义一个回调接口来实现Click和LongClick事件
     public interface OnItemClickListener  {
         void onItemClick(View v, ViewName viewName, int position);
-        void onItemLongClick(View v);
+        //void onItemLongClick(View v);
     }
 
     private OnItemClickListener mOnItemClickListener;//声明自定义的接口

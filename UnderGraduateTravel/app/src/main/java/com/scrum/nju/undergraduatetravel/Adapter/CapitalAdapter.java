@@ -9,19 +9,23 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.scrum.nju.undergraduatetravel.MiddleClass.Team;
 import com.scrum.nju.undergraduatetravel.R;
 
 import java.util.List;
 
 
-public class CapitalAdapter extends RecyclerView.Adapter <CapitalAdapter.MyViewHolder>{
-    List<String> list;//存放数据
+public class CapitalAdapter extends RecyclerView.Adapter <CapitalAdapter.MyViewHolder> implements View.OnClickListener{
+    List<Team> list;//存放数据
     Context context;
+    public enum ViewName {
+        ITEM,
+        PRACTISE
+    }
 
-
-
+    private CapitalAdapter.OnItemClickListener mOnItemClickListener;//声明自定义的接口
     private LayoutInflater mLayoutInflater;
-    public CapitalAdapter(List<String> list, Context context) {
+    public CapitalAdapter(List<Team> list, Context context) {
         this.list = list;
         this.context = context;
         mLayoutInflater = LayoutInflater.from(context);
@@ -35,7 +39,7 @@ public class CapitalAdapter extends RecyclerView.Adapter <CapitalAdapter.MyViewH
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int i) {
-        holder.textView.setText(list.get(i));
+        holder.textView.setText(list.get(i).getTeamid());
         //子项的点击事件监听
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,6 +47,30 @@ public class CapitalAdapter extends RecyclerView.Adapter <CapitalAdapter.MyViewH
                 Toast.makeText(context, "点击子项"+i, Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public void onClick(View v) {
+        int position = (int) v.getTag();      //getTag()获取数据
+        if (mOnItemClickListener != null) {
+            switch (v.getId()){
+                case R.id.recforAddFriends:
+                    mOnItemClickListener.onItemClick(v, CapitalAdapter.ViewName.PRACTISE, position);
+                    break;
+                default:
+                    mOnItemClickListener.onItemClick(v, CapitalAdapter.ViewName.ITEM, position);
+                    break;
+            }
+        }
+    }
+
+    public interface OnItemClickListener  {
+        void onItemClick(View v, CapitalAdapter.ViewName viewName, int position);
+
+    }
+    //定义方法并传给外面的使用者
+    public void setOnItemClickListener(CapitalAdapter.OnItemClickListener listener) {
+        this.mOnItemClickListener  = listener;
     }
 
     @Override
